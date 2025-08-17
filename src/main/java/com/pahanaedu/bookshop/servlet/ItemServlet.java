@@ -137,4 +137,5 @@ public class ItemServlet extends HttpServlet {
             request.getRequestDispatcher("manageItems.jsp").forward(request, response);
         }
     }
+
 }
