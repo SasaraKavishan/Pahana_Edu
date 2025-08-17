@@ -20,5 +20,25 @@ CREATE TABLE items (
                        price DECIMAL(10, 2) NOT NULL
 );
 
--- Insert a default admin user (password: admin123, hashed using a simple method for demo)
+
+CREATE TABLE bills (
+                       bill_id INT AUTO_INCREMENT PRIMARY KEY,
+                       account_number VARCHAR(50) NOT NULL,
+                       total DECIMAL(10, 2) NOT NULL,
+                       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                       FOREIGN KEY (account_number) REFERENCES customers(account_number)
+);
+
+
+CREATE TABLE bill_items (
+                            bill_item_id INT AUTO_INCREMENT PRIMARY KEY,
+                            bill_id INT NOT NULL,
+                            item_id INT NOT NULL,
+                            quantity INT NOT NULL,
+                            subtotal DECIMAL(10, 2) NOT NULL,
+                            FOREIGN KEY (bill_id) REFERENCES bills(bill_id),
+                            FOREIGN KEY (item_id) REFERENCES items(item_id)
+);
+
+
 INSERT INTO users (username, password) VALUES ('admin', 'admin123');
