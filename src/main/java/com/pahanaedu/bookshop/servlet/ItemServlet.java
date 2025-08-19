@@ -36,6 +36,8 @@ public class ItemServlet extends HttpServlet {
             viewItems(request, response);
         } else if ("edit".equals(action)) {
             loadItemForEdit(request, response);
+        } else if ("delete".equals(action)) {
+            deleteItem(request, response);
         }
     }
 
@@ -43,14 +45,18 @@ public class ItemServlet extends HttpServlet {
         Item item = new Item(
                 0, // itemId is auto-incremented
                 request.getParameter("name"),
-                Double.parseDouble(request.getParameter("price"))
+                Double.parseDouble(request.getParameter("price")),
+                request.getParameter("category"),
+                Integer.parseInt(request.getParameter("stock"))
         );
 
         try (Connection conn = DatabaseUtil.getConnection()) {
-            String sql = "INSERT INTO items (name, price) VALUES (?, ?)";
+            String sql = "INSERT INTO items (name, price, category, stock) VALUES (?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, item.getName());
             stmt.setDouble(2, item.getPrice());
+            stmt.setString(3, item.getCategory());
+            stmt.setInt(4, item.getStock());
             stmt.executeUpdate();
             response.sendRedirect("item?action=view&success=Item added successfully");
         } catch (SQLException e) {
@@ -64,15 +70,19 @@ public class ItemServlet extends HttpServlet {
         Item item = new Item(
                 Integer.parseInt(request.getParameter("itemId")),
                 request.getParameter("name"),
-                Double.parseDouble(request.getParameter("price"))
+                Double.parseDouble(request.getParameter("price")),
+                request.getParameter("category"),
+                Integer.parseInt(request.getParameter("stock"))
         );
 
         try (Connection conn = DatabaseUtil.getConnection()) {
-            String sql = "UPDATE items SET name = ?, price = ? WHERE item_id = ?";
+            String sql = "UPDATE items SET name = ?, price = ?, category = ?, stock = ? WHERE item_id = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, item.getName());
             stmt.setDouble(2, item.getPrice());
-            stmt.setInt(3, item.getItemId());
+            stmt.setString(3, item.getCategory());
+            stmt.setInt(4, item.getStock());
+            stmt.setInt(5, item.getItemId());
             stmt.executeUpdate();
             response.sendRedirect("item?action=view&success=Item updated successfully");
         } catch (SQLException e) {
@@ -92,13 +102,14 @@ public class ItemServlet extends HttpServlet {
                 Item item = new Item(
                         rs.getInt("item_id"),
                         rs.getString("name"),
-                        rs.getDouble("price")
+                        rs.getDouble("price"),
+                        rs.getString("category"),
+                        rs.getInt("stock")
                 );
                 items.add(item);
             }
-            System.out.println("Retrieved " + items.size() + " items"); // Debug log
+            System.out.println("Retrieved " + items.size() + " items");
             request.setAttribute("items", items);
-            // Transfer success message from query parameter to request attribute
             String success = request.getParameter("success");
             if (success != null) {
                 request.setAttribute("success", success);
@@ -107,7 +118,7 @@ public class ItemServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
             request.setAttribute("error", "Failed to retrieve items: " + e.getMessage());
-            request.setAttribute("items", items); // Set empty list
+            request.setAttribute("items", items);
             request.getRequestDispatcher("manageItems.jsp").forward(request, response);
         }
     }
@@ -123,7 +134,9 @@ public class ItemServlet extends HttpServlet {
                 Item item = new Item(
                         rs.getInt("item_id"),
                         rs.getString("name"),
-                        rs.getDouble("price")
+                        rs.getDouble("price"),
+                        rs.getString("category"),
+                        rs.getInt("stock")
                 );
                 request.setAttribute("item", item);
                 request.getRequestDispatcher("editItem.jsp").forward(request, response);
@@ -138,4 +151,23 @@ public class ItemServlet extends HttpServlet {
         }
     }
 
+    private void deleteItem(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int itemId = Integer.parseInt(request.getParameter("itemId"));
+        try (Connection conn = DatabaseUtil.getConnection()) {
+            String sql = "DELETE FROM items WHERE item_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, itemId);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                response.sendRedirect("item?action=view&success=Item deleted successfully");
+            } else {
+                request.setAttribute("error", "Item not found");
+                request.getRequestDispatcher("manageItems.jsp").forward(request, response);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Failed to delete item: " + e.getMessage());
+            request.getRequestDispatcher("manageItems.jsp").forward(request, response);
+        }
+    }
 }
