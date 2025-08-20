@@ -17,7 +17,9 @@ CREATE TABLE customers (
 CREATE TABLE items (
                        item_id INT AUTO_INCREMENT PRIMARY KEY,
                        name VARCHAR(100) NOT NULL,
-                       price DECIMAL(10, 2) NOT NULL
+                       price DECIMAL(10, 2) NOT NULL.
+                       category VARCHAR(100) NOT NULL DEFAULT 'Uncategorized',
+                       stock INT NOT NULL DEFAULT 0
 );
 
 

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @WebServlet("/bills")
 public class ViewBillsServlet extends HttpServlet {
@@ -33,6 +34,7 @@ public class ViewBillsServlet extends HttpServlet {
     private void viewBills(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Map<String, Object>> bills = new ArrayList<>();
         try (Connection conn = DatabaseUtil.getConnection()) {
+            // Fetch bills with customer names
             String sql = "SELECT b.bill_id, b.account_number, b.total, b.created_at, c.name AS customer_name " +
                     "FROM bills b JOIN customers c ON b.account_number = c.account_number";
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -46,6 +48,22 @@ public class ViewBillsServlet extends HttpServlet {
                 bill.put("createdAt", rs.getTimestamp("created_at"));
                 bills.add(bill);
             }
+
+            // Fetch item names for each bill
+            for (Map<String, Object> bill : bills) {
+                int billId = (int) bill.get("billId");
+                sql = "SELECT i.name FROM bill_items bi JOIN items i ON bi.item_id = i.item_id WHERE bi.bill_id = ?";
+                stmt = conn.prepareStatement(sql);
+                stmt.setInt(1, billId);
+                rs = stmt.executeQuery();
+                List<String> itemNames = new ArrayList<>();
+                while (rs.next()) {
+                    itemNames.add(rs.getString("name"));
+                }
+                String itemNamesStr = itemNames.isEmpty() ? "-" : itemNames.stream().collect(Collectors.joining(", "));
+                bill.put("itemNames", itemNamesStr);
+            }
+
             request.setAttribute("bills", bills);
             String success = request.getParameter("success");
             if (success != null) {
