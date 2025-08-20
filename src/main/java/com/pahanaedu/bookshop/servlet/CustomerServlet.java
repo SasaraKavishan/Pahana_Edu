@@ -36,6 +36,8 @@ public class CustomerServlet extends HttpServlet {
             viewCustomers(request, response);
         } else if ("edit".equals(action)) {
             loadCustomerForEdit(request, response);
+        } else if ("delete".equals(action)) {
+            deleteCustomer(request, response);
         }
     }
 
@@ -44,22 +46,20 @@ public class CustomerServlet extends HttpServlet {
                 request.getParameter("accountNumber"),
                 request.getParameter("name"),
                 request.getParameter("address"),
-                request.getParameter("telephone"),
-                Integer.parseInt(request.getParameter("unitsConsumed"))
+                request.getParameter("telephone")
         );
 
         try (Connection conn = DatabaseUtil.getConnection()) {
-            String sql = "INSERT INTO customers (account_number, name, address, telephone, units_consumed) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO customers (account_number, name, address, telephone) VALUES (?, ?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, customer.getAccountNumber());
             stmt.setString(2, customer.getName());
             stmt.setString(3, customer.getAddress());
             stmt.setString(4, customer.getTelephone());
-            stmt.setInt(5, customer.getUnitsConsumed());
             stmt.executeUpdate();
             response.sendRedirect("customer?action=view&success=Customer added successfully");
         } catch (SQLException e) {
-            e.printStackTrace(); // Log the error
+            e.printStackTrace();
             request.setAttribute("error", "Failed to add customer: " + e.getMessage());
             request.getRequestDispatcher("addCustomer.jsp").forward(request, response);
         }
@@ -70,22 +70,20 @@ public class CustomerServlet extends HttpServlet {
                 request.getParameter("accountNumber"),
                 request.getParameter("name"),
                 request.getParameter("address"),
-                request.getParameter("telephone"),
-                Integer.parseInt(request.getParameter("unitsConsumed"))
+                request.getParameter("telephone")
         );
 
         try (Connection conn = DatabaseUtil.getConnection()) {
-            String sql = "UPDATE customers SET name = ?, address = ?, telephone = ?, units_consumed = ? WHERE account_number = ?";
+            String sql = "UPDATE customers SET name = ?, address = ?, telephone = ? WHERE account_number = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, customer.getName());
             stmt.setString(2, customer.getAddress());
             stmt.setString(3, customer.getTelephone());
-            stmt.setInt(4, customer.getUnitsConsumed());
-            stmt.setString(5, customer.getAccountNumber());
+            stmt.setString(4, customer.getAccountNumber());
             stmt.executeUpdate();
             response.sendRedirect("customer?action=view&success=Customer updated successfully");
         } catch (SQLException e) {
-            e.printStackTrace(); // Log the error
+            e.printStackTrace();
             request.setAttribute("error", "Failed to update customer: " + e.getMessage());
             request.getRequestDispatcher("editCustomer.jsp").forward(request, response);
         }
@@ -102,18 +100,21 @@ public class CustomerServlet extends HttpServlet {
                         rs.getString("account_number"),
                         rs.getString("name"),
                         rs.getString("address"),
-                        rs.getString("telephone"),
-                        rs.getInt("units_consumed")
+                        rs.getString("telephone")
                 );
                 customers.add(customer);
             }
-            System.out.println("Retrieved " + customers.size() + " customers"); // Debug log
+            System.out.println("Retrieved " + customers.size() + " customers");
             request.setAttribute("customers", customers);
+            String success = request.getParameter("success");
+            if (success != null) {
+                request.setAttribute("success", success);
+            }
             request.getRequestDispatcher("viewCustomers.jsp").forward(request, response);
         } catch (SQLException e) {
-            e.printStackTrace(); // Log the error
+            e.printStackTrace();
             request.setAttribute("error", "Failed to retrieve customers: " + e.getMessage());
-            request.setAttribute("customers", customers); // Set empty list
+            request.setAttribute("customers", customers);
             request.getRequestDispatcher("viewCustomers.jsp").forward(request, response);
         }
     }
@@ -130,8 +131,7 @@ public class CustomerServlet extends HttpServlet {
                         rs.getString("account_number"),
                         rs.getString("name"),
                         rs.getString("address"),
-                        rs.getString("telephone"),
-                        rs.getInt("units_consumed")
+                        rs.getString("telephone")
                 );
                 request.setAttribute("customer", customer);
                 request.getRequestDispatcher("editCustomer.jsp").forward(request, response);
@@ -140,8 +140,28 @@ public class CustomerServlet extends HttpServlet {
                 request.getRequestDispatcher("viewCustomers.jsp").forward(request, response);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Log the error
+            e.printStackTrace();
             request.setAttribute("error", "Failed to load customer: " + e.getMessage());
+            request.getRequestDispatcher("viewCustomers.jsp").forward(request, response);
+        }
+    }
+
+    private void deleteCustomer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String accountNumber = request.getParameter("accountNumber");
+        try (Connection conn = DatabaseUtil.getConnection()) {
+            String sql = "DELETE FROM customers WHERE account_number = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, accountNumber);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                response.sendRedirect("customer?action=view&success=Customer deleted successfully");
+            } else {
+                request.setAttribute("error", "Customer not found");
+                request.getRequestDispatcher("viewCustomers.jsp").forward(request, response);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Failed to delete customer: " + e.getMessage());
             request.getRequestDispatcher("viewCustomers.jsp").forward(request, response);
         }
     }

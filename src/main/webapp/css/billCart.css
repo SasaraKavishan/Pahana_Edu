@@ -1,0 +1,218 @@
+/* General Reset and Body Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #f7aa05;
+    line-height: 1.6;
+}
+
+/* Header Styling */
+h1 {
+    text-align: center;
+    color: #000000;
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+h2 {
+    max-width: 800px;
+    margin: 20px auto;
+    color: #f7aa05;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+/* Navigation Bar Styling */
+nav {
+    background-color: #f7aa05;
+    padding: 15px 0;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+nav a {
+    display: inline-block;
+    color: #000000;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 5px 10px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background-color: #000000;
+    color: #f7aa05;
+}
+
+/* Error Message Styling */
+p.error {
+    max-width: 800px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #ffe6e6;
+    color: #cc0000;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1em;
+}
+
+/* Table Styling */
+table {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+    background-color: #f7aa05;
+    color: #000000;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+td {
+    color: #333333;
+    font-size: 1em;
+}
+
+tr:hover {
+    background-color: #f4f4f4;
+}
+
+/* Add to Cart Button Styling */
+.addButton {
+    display: inline-block;
+    color: #f7aa05;
+    text-decoration: none;
+    padding: 8px 12px;
+    border: 2px solid #f7aa05;
+    border-radius: 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.addButton:hover {
+    background-color: #f7aa05;
+    color: #000000;
+
+
+}
+
+/* Total Amount Styling */
+.Total {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #f7aa05;
+    color: #000000;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/* Action Links (Generate Bill and Clear Cart) Styling */
+.AG {
+    display: inline-block;
+    max-width: 220px;
+    margin: 10px 755px;
+    padding: 14px 28px;
+    background-color: #f7aa05;
+    color: #000000;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.actionClear {
+    display: inline-block;
+    max-width: 220px;
+    margin: 10px -288px;
+    padding: 14px 28px;
+    background-color: #f7aa05;
+    color: #000000;
+    text-decoration: none;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.AG:hover {
+    background-color: #000000;
+    color: #f7aa05;
+}
+
+.actionClear:hover {
+    background-color: #FF0507;
+    color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav a {
+        display: block;
+        margin: 10px auto;
+        width: 80%;
+        max-width: 200px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+
+    th, td {
+        padding: 8px 10px;
+    }
+
+    .addTD {
+        font-size: 0.8em;
+        padding: 6px 10px;
+    }
+
+    .Total {
+        font-size: 1.1em;
+    }
+
+    .AG, .actionClear {
+        font-size: 1.1em;
+        padding: 12px 24px;
+        max-width: 200px;
+        display: block;
+        margin: 10px auto;
+    }
+}

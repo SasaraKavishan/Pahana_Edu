@@ -1,0 +1,243 @@
+/* General Reset and Body Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #000000;
+    line-height: 1.6;
+}
+
+/* Header Styling */
+h1 {
+    text-align: center;
+    color: #000000;
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+h2 {
+    text-align: center;
+    color: #f7aa05;
+    font-size: 1.8em;
+    margin: 15px 0;
+}
+
+h3 {
+    max-width: 800px;
+    margin: 20px auto;
+    color: #000000;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Success and Error Message Styling */
+p.success {
+    max-width: 800px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #e6ffe6;
+    color: #006600;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1em;
+}
+
+p.error {
+    max-width: 800px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #ffe6e6;
+    color: #cc0000;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1em;
+}
+
+/* Customer Details Styling */
+p:not(.success):not(.error) {
+    max-width: 800px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #ffffff;
+    color: #333333;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 1.1em;
+}
+
+p strong {
+    color: #000000;
+    font-weight: bold;
+}
+
+/* Table Styling */
+table {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+    background-color: #f7aa05;
+    color: #000000;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+td {
+    color: #333333;
+    font-size: 1em;
+}
+
+tr:hover {
+    background-color: #f4f4f4;
+}
+
+/* Bill Total Styling */
+p:has(strong:contains("Bill Total")) {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #f7aa05;
+    color: #000000;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/* Print Button Styling */
+button.btn.btn-primary {
+    display: block;
+    max-width: 200px;
+    margin: 20px auto;
+    padding: 12px;
+    background-color: #f7aa05;
+    color: #000000;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.btn.btn-primary:hover {
+    background-color: #000000;
+    color: #f7aa05;
+}
+
+.addItem-backButtom {
+    display: block;
+    text-align: center;
+    color: #f7aa05;
+    font-size: 1.1em;
+    text-decoration: none;
+    margin: 20px auto;
+    padding: 10px;
+    max-width: 600px;
+    border: 2px solid #f7aa05;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.addItem-backButtom:hover {
+    background-color: #f7aa05;
+    color: #000000;
+}
+
+/* Print-Friendly Styling */
+@media print {
+    body {
+        background-color: #ffffff;
+    }
+
+    h1, h2, h3 {
+        color: #000000;
+    }
+
+    p.success, p.error {
+        display: none;
+    }
+
+    p:not(.success):not(.error) {
+        box-shadow: none;
+        border: 1px solid #000000;
+    }
+
+    table {
+        box-shadow: none;
+        border: 1px solid #000000;
+    }
+
+    th {
+        background-color: #ffffff;
+        color: #000000;
+        border: 1px solid #000000;
+    }
+
+    td {
+        border: 1px solid #000000;
+    }
+
+    p:has(strong:contains("Bill Total")) {
+        background-color: #ffffff;
+        border: 1px solid #000000;
+    }
+
+    button.btn.btn-primary {
+        display: none;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    h3 {
+        font-size: 1.3em;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+
+    th, td {
+        padding: 8px 10px;
+    }
+
+    p:not(.success):not(.error) {
+        font-size: 1em;
+    }
+
+    p:has(strong:contains("Bill Total")) {
+        font-size: 1.1em;
+    }
+
+    button.btn.btn-primary {
+        font-size: 1em;
+    }
+}

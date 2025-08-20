@@ -1,0 +1,179 @@
+/* General Reset and Body Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #f7aa05;
+    line-height: 1.6;
+}
+
+/* Header Styling */
+h1 {
+    text-align: center;
+    color: #000000;
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+/* Navigation Bar Styling */
+nav {
+    background-color: #f7aa05;
+    padding: 15px 0;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+nav a {
+    display: inline-block;
+    color: #000000;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 5px 10px;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+nav a:hover {
+    background-color: #000000;
+    color: #f7aa05;
+}
+
+/* Error Message Styling */
+p.error {
+    max-width: 600px;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: #ffe6e6;
+    color: #cc0000;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1em;
+}
+
+/* No Item Data Message Styling */
+p:not(.error) {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #ffffff;
+    color: #333333;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 1.1em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Container Styling */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Form Label and Input Styling */
+label {
+    display: block;
+    color: #000000;
+    font-size: 1.1em;
+    margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 2px solid #f7aa05;
+    border-radius: 5px;
+    color: #000000;
+    background-color: #f4f4f4;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: #000000;
+}
+
+/* Submit Button Styling */
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    background-color: #f7aa05;
+    color: #000000;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #000000;
+    color: #f7aa05;
+}
+
+/* Back Link Styling */
+.editItem-backButton {
+    display: block;
+    text-align: center;
+    color: #f7aa05;
+    font-size: 1.1em;
+    text-decoration: none;
+    margin: 20px auto;
+    padding: 10px;
+    max-width: 600px;
+    border: 2px solid #f7aa05;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.editItem-backButton:hover {
+    background-color: #f7aa05;
+    color: #000000;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    nav a {
+        display: block;
+        margin: 10px auto;
+        width: 80%;
+        max-width: 200px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    form {
+        padding: 15px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    button[type="submit"],
+    a[href="item?action=view"],
+    p.error,
+    p:not(.error) {
+        font-size: 1em;
+    }
+}

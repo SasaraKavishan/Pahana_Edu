@@ -1,0 +1,93 @@
+/* Reset default styles for consistency */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling with a clean background */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Header styling */
+h1, h2 {
+    text-align: center;
+    color: #000000;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 3.5em;
+    font-weight: bold;
+    margin-top: 130px;
+}
+
+h2 {
+    font-size: 2.8em;
+    color: #f7aa05;
+}
+
+/* Navigation menu styling */
+ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin-top: 100px;
+}
+
+/* Box-type button styling for menu items */
+ul li a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f7aa05;
+    color: #000000;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    width: 200px;
+    height: 150px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, background-color 0.3s;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Hover effect for buttons */
+ul li a:hover {
+    background-color: #000000;
+    color: #f7aa05;
+    transform: scale(1.05);
+}
+
+/* Icon styling */
+ul li a i {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    ul li a {
+        width: 100%;
+        max-width: 300px;
+    }
+}
