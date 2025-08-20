@@ -28,11 +28,10 @@ public class BillingServlet extends HttpServlet {
                         rs.getString("account_number"),
                         rs.getString("name"),
                         rs.getString("address"),
-                        rs.getString("telephone"),
-                        rs.getInt("units_consumed")
+                        rs.getString("telephone")
                 );
-                double unitPrice = 10.0; // Example price per unit (adjust as needed)
-                double billAmount = customer.getUnitsConsumed() * unitPrice;
+                double unitPrice = 10.0;
+                double billAmount = unitPrice;
                 request.setAttribute("customer", customer);
                 request.setAttribute("billAmount", billAmount);
                 request.getRequestDispatcher("generateBill.jsp").forward(request, response);
