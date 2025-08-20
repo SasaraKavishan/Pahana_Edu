@@ -60,7 +60,7 @@ public class CustomerServlet extends HttpServlet {
             response.sendRedirect("customer?action=view&success=Customer added successfully");
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("error", "Failed to add customer: " + e.getMessage());
+            request.setAttribute("error", "Failed to add customer: " );
             request.getRequestDispatcher("addCustomer.jsp").forward(request, response);
         }
     }
